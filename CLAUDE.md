@@ -9,18 +9,20 @@ All Pokémon pages in Notion should have **big, consistent, centered** page icon
 ## Current State (2026-03-03)
 
 Each game row uses sprites from its own generation's art style:
-- **Games 1-9** (gen7x): [pokesprite](https://github.com/msikma/pokesprite) `pokemon-gen7x/regular/` — SM/USUM-era pixel art (68×56)
+- **Games 1-9, 13** (gen7x): [pokesprite](https://github.com/msikma/pokesprite) `pokemon-gen7x/regular/` — SM/USUM-era pixel art (68×56)
 - **Games 10-11 minus Staraptor** (gen8): pokesprite `pokemon-gen8/regular/` — SwSh-era pixel art (68×56)
 - **Game 12** (gen9/bamq): [bamq/pokemon-sprites](https://github.com/bamq/pokemon-sprites) `pokemon/regular/` — SV-era pixel art (68×56)
 
 ### Current Processing Pipeline
 
-All sprites: trim transparent padding → fixed nearest-neighbor scale per group → centered on 280×280 transparent canvas → losslessly compressed with pingo (-s4).
+All sprites: trim transparent padding → fixed nearest-neighbor scale per group → **centered by visual center-of-mass** on 280×280 transparent canvas → losslessly compressed with pingo (-s4).
 
-- **Gen7x group** (57 sprites): 7x scale (max trimmed sprite: 37×30 → 259×210)
+- **Gen7x group** (59 sprites): 7x scale (max trimmed sprite: 37×30 → 259×210)
 - **Gen8+ group** (17 sprites): 5x scale (max trimmed sprite: 47×42 → 235×210)
 
 Pixel size is consistent within each group, preserving natural size differences between Pokémon.
+
+**Center-of-mass centering:** Instead of centering the bounding box, we compute the centroid of all opaque pixels (visual center of gravity) and align that to the canvas center. This makes sprites look visually balanced — e.g., a Pokémon with a long tail won't appear off-center. The offset is clamped so no part of the sprite is ever cropped off the canvas edge.
 
 ### What Didn't Work (Tried 2026-03-03)
 
@@ -29,7 +31,8 @@ Pixel size is consistent within each group, preserving natural size differences 
 3. **Raw 68×56 centered on 128×128** — still too small.
 4. **Fixed 4x scale WITHOUT trimming on 280×280** — too much transparent padding in the source sprites made everything tiny.
 5. **Fixed 5x scale WITH trimming on 280×280 (all sprites same scale)** — still too small because the gen8+ sprites (max 47px trimmed) limited the scale factor for everyone.
-6. **Per-group scaling (7x/5x) WITH trimming on 280×280** — current approach, still a bit small but getting closer.
+6. **Per-group scaling (7x/5x) WITH trimming on 280×280, bounding-box centering** — sprites not visually centered (asymmetric features like tails/crests pulled the apparent center off).
+7. **Per-group scaling (7x/5x) WITH trimming on 280×280, center-of-mass centering** — current approach. Visually centered and consistent.
 
 ### Cache Busting for Notion
 
