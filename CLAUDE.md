@@ -29,7 +29,7 @@ Pixel size is consistent within each group, preserving natural size differences 
 
 ### Cache Busting for Notion
 
-Notion caches external icon URLs aggressively. To force refresh after pushing new sprites, re-set all icons via the API with `?v=<timestamp>` appended to the URL. This makes Notion treat it as a new URL and re-fetch.
+Notion caches external icon URLs aggressively. To force refresh after pushing new sprites, reset all icons via the API with `?v=<timestamp>` appended to the URL. This makes Notion treat it as a new URL and re-fetch.
 
 ## Sprite Sources
 
