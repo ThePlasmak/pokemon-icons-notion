@@ -1,4 +1,9 @@
-# Pokemon Sprites
-I edited these Pokémon box sprites (increasing the size and centering them) so they can be used as Notion page icons.
+# Pokemon Icons for Notion
 
-Currently, I'm only including the sprites of Pokémon I need.
+Pokémon box sprites processed (trimmed, scaled, and centered) for use as Notion page icons.
+
+## Image Sources
+
+- [msikma/pokesprite](https://github.com/msikma/pokesprite) for Gen 1 to 8 Pokémon
+
+- [bamq/pokemon-sprites](https://github.com/bamq/pokemon-sprites) for Gen 9 Pokémon
